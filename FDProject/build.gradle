@@ -32,6 +32,9 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-client') // 권한 관련
+    testImplementation("org.springframework.security:spring-security-test") // 권한 관련
 }
 
 tasks.named('test') {
