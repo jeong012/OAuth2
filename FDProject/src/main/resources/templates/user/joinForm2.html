@@ -31,15 +31,11 @@
 	                <span class="ex">(최대 3개)</span>
 	                <ul>
 	                  <li>
-	                    <span>
-	                      위염
-	                    </span>
+	                    <span>위염</span>
 	                    <a class="del" href="">x</a>
 	                  </li>
 	                  <li>
-	                    <span>
-	                      당뇨
-	                    </span>
+	                    <span>당뇨</span>
 	                    <a class="del" href="">x</a>
 	                  </li>
 	                </ul>
@@ -59,15 +55,11 @@
 	                <span class="ex">(최대 5개)</span>
 	                <ul>
 	                  <li>
-	                    <span>
-	                      스티렌
-	                    </span>
+	                    <span>스티렌</span>
 	                    <a class="del" href="">x</a>
 	                  </li>
 	                  <li>
-	                    <span>
-	                      타이레놀
-	                    </span>
+	                    <span>타이레놀</span>
 	                    <a class="del" href="">x</a>
 	                  </li>
 	                </ul>
@@ -112,11 +104,37 @@
 	        </div>
 	      </div>
 	    </section>
-	    <script>
-	        $(function(){
-	            
-	        })
-	    </script>
+  
+		<th:block layout:fragment="script">
+			<script th:inline="javascript">
+				/*<![CDATA[*/
+					var data = "";
+					$(document).ready(function() {
+						$.ajax({
+							url : "/disease/getList",
+							type : "get",
+							dataType : "json",
+							success : function(json) {
+								console.log(json.diseaseList[0]);
+							},
+							error : function(error) {
+								console.error(error);
+						    }
+						});
+					});
+					
+					$("#inputDrug").keyup(function(){
+						// 텍스트 영역에 글씨 입력이 끝나면
+						console.log("keyup");
+					});
+				
+					$("#inputDrug").keydown(function(){
+						// 텍스트 영역에 글씨 입력이 시작이면	
+						console.log("keydown");
+					});
+				/*]]*/
+			</script>
+		</th:block>
 
   	</main><!-- End #main -->
   </div>
