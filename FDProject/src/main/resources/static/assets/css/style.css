@@ -2171,6 +2171,7 @@ select.list-dt:focus {
   background: #fff;
   color: #454545;
   letter-spacing: -0.2px;
+  border:1px solid #ddd;
 }
 .btn-join{
   width: 100%;
