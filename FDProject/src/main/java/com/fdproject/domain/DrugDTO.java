@@ -1,9 +1,6 @@
 package com.fdproject.domain;
 
-import com.fdproject.paging.Criteria;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class DrugDTO extends CommonDTO {

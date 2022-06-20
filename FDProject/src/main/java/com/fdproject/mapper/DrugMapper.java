@@ -19,4 +19,7 @@ public interface DrugMapper {
 
     int selectDrugTotalCount(DrugDTO drugDTO);
 
+    /** 회원가입 - 약 리스트 조회 사용*/
+    List<DrugDTO> userDrugList();
+    
 }

@@ -16,11 +16,12 @@ public class DiseaseServiceImpl implements DiseaseService{
 
     private final DiseaseMapper diseaseMapper;
 
+    /** 회원가입 - 질병 리스트 조회 사용*/
 	@Override
-	public List<DiseaseDTO> getDiseaseList() {
+	public List<DiseaseDTO> getUserDiseaseList() {
 		
         List<DiseaseDTO> diseaseList = new ArrayList<>();
-        diseaseList = diseaseMapper.diseaseList();
+        diseaseList = diseaseMapper.userDiseaseList();
         
 		return diseaseList;
 	}

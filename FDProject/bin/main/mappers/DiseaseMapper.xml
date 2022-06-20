@@ -20,11 +20,13 @@
         ]]>
     </sql>
 
-    <select id="diseaseList" resultMap="disease">
-        select <include refid="diseaseColumns"/>
-        from diseases
-        where 1=1
-        order by disease_no
+    <select id="userDiseaseList" resultMap="disease">
+   	 	<![CDATA[
+	        select DISEASE_NO, DISEASE_NAME
+	        from diseases
+	        where 1=1
+	        order by disease_no
+        ]]>
     </select>
     
 </mapper>

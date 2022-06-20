@@ -2,42 +2,27 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/basic">
-
-	<div layout:fragment="content">
-	  <main id="main" data-aos="fade-up">
 	
+	<div layout:fragment="content">
 	    <section class="bg-light">
 	      <div class="container">
-	
-	        <div class="">
 	          <!-- 회원가입 폼 -->
-	          <form class="join-form2" method="post" action="">
+			  <div class="join-form2">
 	            <h4>- 선택 항목 입력</h4>
-	            <input type="hidden" id="" name="" value="">
-	
 	            <div class="row select-detail-wrap">
-	
 	              <div class="mb-3 row">
 	                <label for="inputDisease" class="col-4 col-form-label"><span>●</span> 앓고 있는 지병이 있으신가요?</label>
 	                <div class="col-2 input-box">
 	                  <input type="text" class="form-control" id="inputDisease">
-	                  <button class="btn-add btn-primary">
-	                    <i class='bx bx-plus' ></i>
+	                  <button class="btn-add btn-primary" onclick="addDisease()">
+	                    <i class='bx bx-plus'></i>
 	                  </button>
 	                </div>
 	              </div>
 	
 	              <div id="selectedDisease" class="disease-kind">
 	                <span class="ex">(최대 3개)</span>
-	                <ul>
-	                  <li>
-	                    <span>위염</span>
-	                    <a class="del" href="">x</a>
-	                  </li>
-	                  <li>
-	                    <span>당뇨</span>
-	                    <a class="del" href="">x</a>
-	                  </li>
+	                <ul id="selectedDisease">
 	                </ul>
 	              </div>
 	
@@ -45,26 +30,19 @@
 	                <label for="inputDrug" class="col-4 col-form-label"><span>●</span> 복용 중인 약이 있으신가요?</label>
 	                <div class="col-2 input-box">
 	                  <input type="text" class="form-control" id="inputDrug">
-	                  <button class="btn-add btn-primary">
-	                    <i class='bx bx-plus' ></i>
+	                  <button class="btn-add btn-primary" onclick="addDrug()">
+	                    <i class='bx bx-plus'></i>
 	                  </button>
 	                </div>
 	              </div>
 	
-	              <div id="selectedDisease" class="disease-kind">
+	              <div id="selectedDrug" class="disease-kind">
 	                <span class="ex">(최대 5개)</span>
-	                <ul>
-	                  <li>
-	                    <span>스티렌</span>
-	                    <a class="del" href="">x</a>
-	                  </li>
-	                  <li>
-	                    <span>타이레놀</span>
-	                    <a class="del" href="">x</a>
-	                  </li>
+	                <ul id="selectedDrug">
 	                </ul>
 	              </div>
 	            </div>
+	            
 	            <div class="agree-wrap">
 	              <h5>
 	                - 약관 동의 
@@ -100,43 +78,204 @@
 	                </div>
 	              </div>
 	            </div>
-	          </form>
+			  </div>
 	        </div>
-	      </div>
 	    </section>
-  
-		<th:block layout:fragment="script">
-			<script th:inline="javascript">
-				/*<![CDATA[*/
-					var data = "";
-					$(document).ready(function() {
-						$.ajax({
-							url : "/disease/getList",
-							type : "get",
-							dataType : "json",
-							success : function(json) {
-								console.log(json.diseaseList[0]);
-							},
-							error : function(error) {
-								console.error(error);
-						    }
-						});
-					});
-					
-					$("#inputDrug").keyup(function(){
-						// 텍스트 영역에 글씨 입력이 끝나면
-						console.log("keyup");
-					});
+	</div>
+
+	<th:block layout:fragment="script">
+		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+ 		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+				var diseaseNameList = new Array();
+				var diseaseNoList = new Array();
+				var diseaseNo;
+				var diseaseName;
+				var diseaseMap = new Map();
 				
-					$("#inputDrug").keydown(function(){
-						// 텍스트 영역에 글씨 입력이 시작이면	
-						console.log("keydown");
+				var drugNameList = new Array();
+				var drugNoList = new Array();
+				var drugNo;
+				var drugName;
+				var drugMap = new Map();
+				
+				$(document).ready(function() {
+					$.ajax({
+						url : "/user/disease/getList.do",
+						type : "get",
+						dataType : "json",
+						success : function(json) {
+							var diseaseList = json.diseaseList;
+							diseaseList.forEach(function(arg){
+								diseaseNameList.push(arg.diseaseName);
+						    });
+							
+							diseaseList.forEach(function(arg){
+								diseaseNoList.push(arg.diseaseNo);
+						    });
+						},
+						error : function(error) {
+							console.error(error);
+					    }
 					});
-				/*]]*/
-			</script>
-		</th:block>
 
-  	</main><!-- End #main -->
-  </div>
+					$.ajax({
+						url : "/user/drug/getList.do",
+						type : "get",
+						dataType : "json",
+						success : function(json) {
+							var drugList = json.drugList;
+							drugList.forEach(function(arg){
+								drugNameList.push(arg.drugName);
+						    });
+							
+							drugList.forEach(function(arg){
+								drugNoList.push(arg.drugNo);
+						    });
+						},
+						error : function(error) {
+							console.error(error);
+					    }
+					});
+				});
+				
+				$('#inputDisease').click(function() {
+					if(diseaseMap.size === 3){
+						alert("최대 3개만 입력 가능합니다.");
+					}
+				});
+				
+				$("#inputDisease").autocomplete({
+					source : diseaseNameList,
+					select : function(event, ui) {
+						diseaseName = ui.item.value;
+			            diseaseNo = diseaseNoList[diseaseNameList.indexOf(diseaseName)];
+		            }
+				});
+				
+				function addDisease(){
+					if($("#inputDisease").val() === "" || diseaseNameList.indexOf(diseaseName) === -1){
+						alert("등록할 수 없습니다.");
+					}else{
+						for(var i = 0; i < diseaseNameList.length; i++) {
+							if(diseaseNameList[i] === diseaseName)  {
+								diseaseNameList.splice(i, 1);
+								diseaseNoList.splice(i, 1);
+								i--;
+							}
+						}
 
+						var data = "";
+						$("ul[id=selectedDisease]").empty();
+						diseaseMap.set(diseaseNo, diseaseName);
+						diseaseMap.forEach( (value, key, map) => {
+							diseaseName = `${value}`;
+							diseaseNo = `${key}`;
+							
+							data += "<li>"
+								 + "	<span>" + diseaseName + "</span>"
+				                 + "	<a href='javascript:delDisease("+ diseaseNo + ");'>x</a>"
+				                 + "</li>";
+						});
+						$("ul[id=selectedDisease]").append(data);
+						$("input[type=text][id=inputDisease]").val("");
+						diseaseName = "";
+					}
+				};
+				
+				function delDisease(diseaseNo){
+					diseaseName = diseaseMap.get(diseaseNo);
+					diseaseNameList.push(diseaseName);
+					diseaseNoList.push(diseaseNo);
+					
+					diseaseMap.delete(diseaseNo);
+
+					var data = "";;
+					$("ul[id=selectedDisease]").empty();
+					diseaseMap.forEach( (value, key, map) => {
+						diseaseName = `${value}`;
+						diseaseNo = `${key}`;
+						
+						data += "<li>"
+							 + "	<span>" + diseaseName + "</span>"
+			                 + "	<a href='javascript:delDisease("+ diseaseNo + ");'>x</a>"
+			                 + "</li>";
+					});
+					$("ul[id=selectedDisease]").append(data);
+					$("input[type=text][id=inputDisease]").val("");
+					diseaseName = "";
+				};				
+				
+				$('#inputDrug').click(function() {
+					if(drugMap.size === 5){
+						alert("최대 5개만 입력 가능합니다.");
+					}
+				});
+				
+				$("#inputDrug").autocomplete({
+					source : drugNameList,
+					select : function(event, ui) {
+						drugName = ui.item.value;
+			            drugNo = drugNoList[drugNameList.indexOf(drugName)];
+		            }
+				});
+
+				function addDrug(){
+					if($("#inputDrug").val() === "" || drugNameList.indexOf(drugName) === -1){
+						alert("등록할 수 없습니다.");
+					}else{
+						for(var i = 0; i < drugNameList.length; i++) {
+							if(drugNameList[i] === drugName)  {
+								drugNameList.splice(i, 1);
+								drugNoList.splice(i, 1);
+								i--;
+							}
+						}
+
+						var data = "";
+						$("ul[id=selectedDrug]").empty();
+						drugMap.set(drugNo, drugName);
+						drugMap.forEach( (value, key, map) => {
+							drugName = `${value}`;
+							drugNo = `${key}`;
+							
+							data += "<li>"
+								 + "	<span>" + drugName + "</span>"
+				                 + "	<a href='javascript:delDrug("+ drugNo + ");'>x</a>"
+				                 + "</li>";
+						});
+						$("ul[id=selectedDrug]").append(data);
+						$("input[type=text][id=inputDrug]").val("");
+						drugName = "";
+					}
+				};
+				
+				function delDrug(drugNo){
+					drugName = drugMap.get(drugNo);
+					drugNameList.push(drugName);
+					drugNoList.push(drugNo);
+					
+					drugMap.delete(drugNo);
+
+					var data = "";;
+					$("ul[id=selectedDrug]").empty();
+					drugMap.forEach( (value, key, map) => {
+						drugName = `${value}`;
+						drugNo = `${key}`;
+						
+						data += "<li>"
+							 + "	<span>" + drugName + "</span>"
+			                 + "	<a href='javascript:delDrug("+ drugNo + ");'>x</a>"
+			                 + "</li>";
+					});
+					$("ul[id=selectedDrug]").append(data);
+					$("input[type=text][id=inputDrug]").val("");
+					drugName = "";
+				};
+
+			/*]]*/
+		</script>
+ 	</th:block>
+ 	
 </html>
