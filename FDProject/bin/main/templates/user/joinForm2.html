@@ -71,7 +71,7 @@
 	              
 	            <div class="form-group">
 	                <div class="d-grid gap-2">
-                  		<button type="submit" class="btn btn-primary btn-join" onclick="signUp()">회원 가입</button>
+                  		<button type="submit" class="btn btn-primary btn-join" onclick="join()">회원 가입</button>
                 	</div>
 	            </div>
 	              
@@ -281,9 +281,28 @@
 					drugName = "";
 				};
 				
-				function signUp(){
+				function join(){
 					if(isChecked){
+						var params = {
+							drugMap : drugMap,
+							diseaseMap : diseaseMap
+						}
+						console.log(params);
 						
+						$.ajax({
+							url : "/user/join.do",
+							type : "post",
+							data : params,
+							dataType : "json",
+							success : function(json) {
+								if(json.result === 'success'){
+									alert("회원 가입 성공");
+								}
+							},
+							error : function(error) {
+								console.error(error);
+						    }
+						});
 					} else{
 						alert("약관 동의가 필요합니다.")
 					}
