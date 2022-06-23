@@ -2,7 +2,6 @@ package com.study01.springboot.web.domain.posts;
 
 import com.study01.springboot.domain.posts.Posts;
 import com.study01.springboot.domain.posts.PostsRepository;
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

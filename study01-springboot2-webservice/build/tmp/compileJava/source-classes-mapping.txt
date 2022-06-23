@@ -28,10 +28,12 @@ com/study01/springboot/config/WebConfig.java
  com.study01.springboot.config.WebConfig
 com/study01/springboot/config/auth/LoginUser.java
  com.study01.springboot.config.auth.LoginUser
+com/study01/springboot/config/JpaConfig.java
+ com.study01.springboot.config.JpaConfig
 com/study01/springboot/web/PostsApiController.java
  com.study01.springboot.web.PostsApiController
-com/study01/springboot/web/dto/PostsListResponseDto.java
- com.study01.springboot.web.dto.PostsListResponseDto
+com/study01/springboot/Application.java
+ com.study01.springboot.Application
 com/study01/springboot/config/auth/dto/OAuthAttributes.java
  com.study01.springboot.config.auth.dto.OAuthAttributes
  com.study01.springboot.config.auth.dto.OAuthAttributes$OAuthAttributesBuilder
@@ -47,7 +49,5 @@ com/study01/springboot/web/HelloController.java
  com.study01.springboot.web.HelloController
 com/study01/springboot/config/auth/LoginUserArgumentResolver.java
  com.study01.springboot.config.auth.LoginUserArgumentResolver
-com/study01/springboot/config/JpaConfig.java
- com.study01.springboot.config.JpaConfig
-com/study01/springboot/Application.java
- com.study01.springboot.Application
+com/study01/springboot/web/dto/PostsListResponseDto.java
+ com.study01.springboot.web.dto.PostsListResponseDto
