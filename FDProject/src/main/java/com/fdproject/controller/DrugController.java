@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "drug")
+@RequestMapping(value = "/drug")
 @RequiredArgsConstructor
 public class DrugController extends UiUtils {
 

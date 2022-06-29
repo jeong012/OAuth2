@@ -94,4 +94,14 @@
             #{item.drugName}
         </foreach>
     </select>
+    
+    <select id="userDrugList" resultMap="drug">
+        <![CDATA[
+	        select DRUG_NO, DRUG_NAME
+	        from drugs
+	        where 1=1
+	        order by drug_no
+        ]]>
+    </select>
+    
 </mapper>

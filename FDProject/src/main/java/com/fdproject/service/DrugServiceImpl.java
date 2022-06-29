@@ -1,5 +1,6 @@
 package com.fdproject.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,4 +48,13 @@ public class DrugServiceImpl implements DrugService {
         }
         return drugList;
     }
+    
+    /** 회원가입 - 약 리스트 조회 사용*/
+	public List<DrugDTO> getUserDrugList() {
+		
+        List<DrugDTO> drugList = new ArrayList<>();
+        drugList = drugMapper.userDrugList();
+        
+		return drugList;
+	}
 }
