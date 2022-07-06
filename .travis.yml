@@ -10,7 +10,7 @@ branches:
 cache:
   directories:
     - '$HOME/.m2/repository'
-    - '$HOME/.gradle'
+    - '$HOME/study01-springboot2-webservice/.gradle'
 
 script: "./study01-springboot2-webservice/gradlew clean build"
 
